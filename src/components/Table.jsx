@@ -32,15 +32,23 @@ function Table() {
       setPlanetList(planetList.filter((planet) => planet[column] < Number(value)));
       break;
     default:
-      setPlanetList(planetList.filter((planet) => planet[column] === value));
+      setPlanetList(planetList
+        .filter((planet) => Number(planet[column]) === Number(value)));
     }
   };
 
   const filters = () => {
-    setArrayOfFilters(arrayOfFilters.concat(filter));
     const newArray = arrayOfFilters.concat(filter);
+    setArrayOfFilters(newArray);
     newArray.forEach((param) => filterByValue(param));
+
     setArrayColumn(arrayColumn.filter((item) => item !== filter.column));
+  };
+
+  const removeFilter = ({ target }) => {
+    setArrayColumn([...arrayColumn, arrayOfFilters[target.id].column]);
+    arrayOfFilters.splice(target.id, 1);
+    arrayOfFilters.forEach((param) => filterByValue(param));
   };
 
   return (
@@ -83,6 +91,24 @@ function Table() {
         Filtrar
 
       </button>
+      {
+        arrayOfFilters.map((element, index) => (
+          <div data-testid="filter" key={ index }>
+            <span>{element.column}</span>
+            <span>{element.comparison}</span>
+            <span>{element.value}</span>
+            <button
+              type="button"
+              data-testeid="button-remove-filters"
+              id={ index }
+              onClick={ removeFilter }
+            >
+              Deletar
+
+            </button>
+          </div>
+        ))
+      }
       <table>
         <thead>
           <tr>
