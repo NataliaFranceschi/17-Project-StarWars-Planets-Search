@@ -14,7 +14,7 @@ function Provider({ children }) {
     setKeys(Object.keys(data.results[0]));
   };
 
-  const contextValue = { planetList, keys, fetchApi };
+  const contextValue = { planetList, keys, fetchApi, setPlanetList };
   return (
     <starWarsContext.Provider value={ contextValue }>
       {children}
