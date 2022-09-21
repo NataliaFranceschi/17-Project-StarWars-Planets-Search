@@ -9,6 +9,7 @@ function Table() {
       comparison: 'maior que',
       value: '0' },
   );
+  const [arrayOfFilters, setArrayOfFilters] = useState([]);
 
   useEffect(() => {
     fetchApi();
@@ -19,18 +20,24 @@ function Table() {
       .includes(search.toLowerCase()))
     : planetList;
 
-  const filterByValue = () => {
-    const { column, value } = filter;
-    switch (filter.comparison) {
+  const filterByValue = (param) => {
+    const { column, value, comparison } = param;
+    switch (comparison) {
     case 'maior que':
-      setPlanetList(filterByName.filter((planet) => planet[column] > Number(value)));
+      setPlanetList(planetList.filter((planet) => planet[column] > Number(value)));
       break;
     case 'menor que':
-      setPlanetList(filterByName.filter((planet) => planet[column] < Number(value)));
+      setPlanetList(planetList.filter((planet) => planet[column] < Number(value)));
       break;
     default:
-      setPlanetList(filterByName.filter((planet) => planet[column] === value));
+      setPlanetList(planetList.filter((planet) => planet[column] === value));
     }
+  };
+
+  const filters = () => {
+    setArrayOfFilters(arrayOfFilters.concat(filter));
+    const newArray = arrayOfFilters.concat(filter);
+    newArray.forEach((param) => filterByValue(param));
   };
 
   return (
@@ -67,7 +74,7 @@ function Table() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ filterByValue }
+        onClick={ filters }
       >
         {' '}
         Filtrar
