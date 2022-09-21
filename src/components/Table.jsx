@@ -10,6 +10,8 @@ function Table() {
       value: '0' },
   );
   const [arrayOfFilters, setArrayOfFilters] = useState([]);
+  const [arrayColumn, setArrayColumn] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
 
   useEffect(() => {
     fetchApi();
@@ -38,6 +40,7 @@ function Table() {
     setArrayOfFilters(arrayOfFilters.concat(filter));
     const newArray = arrayOfFilters.concat(filter);
     newArray.forEach((param) => filterByValue(param));
+    setArrayColumn(arrayColumn.filter((item) => item !== filter.column));
   };
 
   return (
@@ -51,11 +54,11 @@ function Table() {
         data-testid="column-filter"
         onChange={ ({ target }) => setFilter({ ...filter, column: target.value }) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          arrayColumn.map((column, index) => (
+            <option key={ index } value={ column }>{column}</option>
+          ))
+        }
       </select>
       <select
         data-testid="comparison-filter"
