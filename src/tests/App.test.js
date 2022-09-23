@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, getByTestId, getByText, render, screen } from '@testing-library/react';
+import { fireEvent, getAllByText, getByTestId, getByText, render, screen } from '@testing-library/react';
 import App from '../App';
 import testData from '../../cypress/mocks/testData'
 import userEvent from '@testing-library/user-event';
@@ -54,12 +54,37 @@ test('testa o filtro "igual"', () => {
   expect(tr.length).toBe(2)
 });
 
+test('testa o filtro "maior que"', () => {
+  //filtro 1
+  fireEvent.change(screen.getByTestId('column-filter'), {target: {value: 'population'}})
+  fireEvent.change(screen.getByTestId('comparison-filter'), {target: {value: 'maior que'}})
+  const input = screen.getByTestId('value-filter')
+  userEvent.type(input, '1000');
+  userEvent.click(screen.getByTestId('button-filter'))
+  //filtro 2
+  fireEvent.change(screen.getByTestId('column-filter'), {target: {value: 'orbital_period'}})
+  fireEvent.change(screen.getByTestId('comparison-filter'), {target: {value: 'menor que'}})
+  userEvent.type(input, '400');
+  userEvent.click(screen.getByTestId('button-filter'))
+  //filtro 3
+  fireEvent.change(screen.getByTestId('column-filter'), {target: {value: 'rotation_period'}})
+  fireEvent.change(screen.getByTestId('comparison-filter'), {target: {value: 'igual a'}})
+  userEvent.type(input, '24');
+  userEvent.click(screen.getByTestId('button-filter'))
+  expect(screen.getAllByRole('row').length).toBe(3)
+  
+  const deleteButton = screen.getAllByText(/Deletar/i)
+  expect(deleteButton.length).toBe(3)
+  userEvent.click(deleteButton[2])
+  expect(screen.getAllByRole('row').length).toBe(5)
+
+  const buttonRemoveAllFilters = screen.getByText(/Remover/)
+  userEvent.click(buttonRemoveAllFilters)
+  expect(screen.getAllByRole('row').length).toBe(11)
+
+});
 
 
-
-
-//teste filtro maior
-//teste o filtro menor
-//teste o filtro =
-
-//testa se ao filtrar usando population ela sai do array
+//TESTA SE QUANDO APAGA O FILTRO APAGA MESMO
+//TESTA QUANDO APAGA TODOS OS FILTROS APAGA TUDO
+//TESTA QUANDO COLOCA ORDEM 
