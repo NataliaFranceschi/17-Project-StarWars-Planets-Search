@@ -54,7 +54,7 @@ test('testa o filtro "igual"', () => {
   expect(tr.length).toBe(2)
 });
 
-test('testa o filtro "maior que"', () => {
+test('testa o botão de deletar filtro e remover todos os filtros', () => {
   //filtro 1
   fireEvent.change(screen.getByTestId('column-filter'), {target: {value: 'population'}})
   fireEvent.change(screen.getByTestId('comparison-filter'), {target: {value: 'maior que'}})
@@ -84,7 +84,21 @@ test('testa o filtro "maior que"', () => {
 
 });
 
+test('testa ordenar de forma "ascendente"', () => {
+  fireEvent.change(screen.getByTestId("column-sort"), {target: {value: 'population'}})
+  const asc = screen.getByTestId('column-sort-input-asc')
+  userEvent.click(asc)
+  userEvent.click(screen.getByText(/Ordenar/))
+  const tr = screen.getAllByRole('row')
+  expect(tr[1]).toHaveTextContent(/Yavin/)
+});
 
-//TESTA SE QUANDO APAGA O FILTRO APAGA MESMO
-//TESTA QUANDO APAGA TODOS OS FILTROS APAGA TUDO
-//TESTA QUANDO COLOCA ORDEM 
+test('testa ordenar de forma "ascendente"', () => {
+  fireEvent.change(screen.getByTestId("column-sort"), {target: {value: 'population'}})
+  const asc = screen.getByTestId("column-sort-input-desc")
+  userEvent.click(asc)
+  userEvent.click(screen.getByText(/Ordenar/))
+  const tr = screen.getAllByRole('row')
+  expect(tr[1]).toHaveTextContent(/Coruscant/)
+});
+
