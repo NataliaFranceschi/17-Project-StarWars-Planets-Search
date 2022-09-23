@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, getAllByText, getByTestId, getByText, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
 import testData from '../../cypress/mocks/testData'
 import userEvent from '@testing-library/user-event';
@@ -93,7 +93,7 @@ test('testa ordenar de forma "ascendente"', () => {
   expect(tr[1]).toHaveTextContent(/Yavin/)
 });
 
-test('testa ordenar de forma "ascendente"', () => {
+test('testa ordenar de forma "descendente"', () => {
   fireEvent.change(screen.getByTestId("column-sort"), {target: {value: 'population'}})
   const asc = screen.getByTestId("column-sort-input-desc")
   userEvent.click(asc)
