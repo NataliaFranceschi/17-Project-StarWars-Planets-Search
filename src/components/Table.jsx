@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import starWarsContext from '../context/starWarsContext';
 
 function Table() {
-  const { planetList, fetchApi, search, keys } = useContext(starWarsContext);
+  const { planetList, fetchApi, search } = useContext(starWarsContext);
 
   useEffect(() => {
     fetchApi();
@@ -13,8 +13,11 @@ function Table() {
       .includes(search.toLowerCase()))
     : planetList;
 
+  const keys = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter',
+    'Climate', 'Gravity', 'Terrain', 'Surface Water',
+    'Population', 'Films', 'Created', 'Edited', 'URL'];
   return (
-    <div>
+    <div className="table">
       <table>
         <thead>
           <tr>
@@ -37,7 +40,7 @@ function Table() {
               <td>{planet.population}</td>
               <td>
                 {planet.films.map((film, i) => (
-                  <li key={ i }>{film}</li>
+                  <p key={ i }>{film}</p>
                 ))}
 
               </td>

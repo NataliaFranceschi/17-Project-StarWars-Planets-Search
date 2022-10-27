@@ -1,4 +1,11 @@
 import React, { useState, useContext } from 'react';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import Button from '@mui/material/Button';
 import starWarsContext from '../context/starWarsContext';
 
 function Order() {
@@ -33,45 +40,56 @@ function Order() {
   };
 
   return (
-    <div>
-      <select
-        data-testid="column-sort"
-        onChange={ ({ target }) => setOrderOption({
-          ...orderOption, column: target.value }) }
-      >
-        {
-          options.map((column, index) => (
-            <option key={ index } value={ column }>{column}</option>
-          ))
-        }
-      </select>
-      <input
-        type="radio"
-        name="typeOrder"
-        value="ASC"
-        data-testid="column-sort-input-asc"
-        onChange={ ({ target }) => setOrderOption({
-          ...orderOption, sort: target.value }) }
-      />
-      Ascendente
-      <input
-        type="radio"
-        name="typeOrder"
-        value="DESC"
-        data-testid="column-sort-input-desc"
-        onChange={ ({ target }) => setOrderOption({
-          ...orderOption, sort: target.value }) }
-      />
-      Descendente
-      <button
+    <>
+      <FormControl variant="standard" sx={ { m: 1, minWidth: 120 } }>
+        <Select
+          data-testid="column-sort"
+          value={ orderOption.column }
+          onChange={ ({ target }) => setOrderOption({
+            ...orderOption, column: target.value }) }
+        >
+          {
+            options.map((column, index) => (
+              <MenuItem key={ index } value={ column }>{column}</MenuItem>
+            ))
+          }
+        </Select>
+      </FormControl>
+      <FormControl>
+        <RadioGroup>
+          <FormControlLabel
+            type="radio"
+            name="typeOrder"
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            onChange={ ({ target }) => setOrderOption({
+              ...orderOption, sort: target.value }) }
+            label="Ascending"
+            control={ <Radio /> }
+          />
+          <FormControlLabel
+            type="radio"
+            name="typeOrder"
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            onChange={ ({ target }) => setOrderOption({
+              ...orderOption, sort: target.value }) }
+            label="Descending"
+            control={ <Radio /> }
+          />
+        </RadioGroup>
+      </FormControl>
+      <Button
+        sx={ { p: 2 } }
+        variant="outlined"
         type="button"
         data-testid="column-sort-button"
         onClick={ orderList }
       >
-        Ordenar
+        Sort
 
-      </button>
-    </div>
+      </Button>
+    </>
   );
 }
 
