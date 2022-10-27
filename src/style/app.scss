@@ -1,0 +1,82 @@
+html{
+    background-image: url(https://i.pinimg.com/originals/9e/b7/0d/9eb70d38d49d66bb4db4c0d00308b071.jpg);
+    background-size: contain;
+    color: white;
+}
+
+.app{
+    background-color: rgb(18,18,18);
+    width: 95%;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.starWarsPlanet{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    img{
+        margin: 100px;
+    }
+}
+
+.filter{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    align-items: center;
+
+    input{
+        border: 2px solid #2E3035;
+        border-radius: 4px;
+    }
+
+    .filterNumberAndOrder {
+        display: flex;
+        margin-top: 20px;
+        width: 100%;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .usedFilter {
+        width: 100%;
+    }
+
+
+}
+
+.table{
+    overflow: scroll;
+    height: 500px;
+    text-align: center;
+
+    tr {
+        border-bottom: 1px solid #2E3035;
+
+        td, th{
+            padding: 10px;
+        }
+
+        th{
+            background-color: #2E3035;
+        }
+    }
+}
+
+.table::-webkit-scrollbar {
+    width: 12px; 
+  }
+  
+  .table::-webkit-scrollbar-track {
+    background:rgb(18,18,18)  
+  }
+  
+  .table::-webkit-scrollbar-thumb {
+    background-color: #2E3035;  
+    border-radius: 20px;       
+    border: 3px solid rgb(18,18,18);
+  }
